@@ -1,13 +1,14 @@
 // function to generate markdown for README
 function generateMarkdown(data) {
   const title = `# ${data.title}\n`;
-  const badge = data.sections.indexOf("lic") >= 0 ? `![license badge](https://img.shields.io/badge/license-${encodeURI(data.lic)}-green)\n\n` : "";
+  const badge = data.sections.indexOf("License") != -1 ? `![license badge](https://img.shields.io/badge/license-${encodeURI(data.lic)}-green)\n\n` : "";
   const head = `## Description\n\n${data.desc}\n\n`;
   const foot = `## Questions\nhttps://github.com/${data.usern}\n\n${data.email}`;
 
   return title+badge+head+makeToC(data.sections)+createSections(data)+foot;
 }
 
+// creates table of contents
 const makeToC = sections => {
   let toc = `## Table of Contents\n`;
   let i = 1;
@@ -18,6 +19,7 @@ const makeToC = sections => {
   return toc;
 }
 
+// creates sections of readme
 const createSections = (responses) => {
   let text = "";
   for (const s of responses.sections) {
