@@ -1,9 +1,11 @@
 // function to generate markdown for README
 function generateMarkdown(data) {
-  const head = `# ${data.title}\n## Description\n\n${data.desc}\n\n`;
+  const title = `# ${data.title}\n`;
+  const badge = data.sections.indexOf("lic") >= 0 ? `![license badge](https://img.shields.io/badge/license-${encodeURI(data.lic)}-green)\n\n` : "";
+  const head = `## Description\n\n${data.desc}\n\n`;
   const foot = `## Questions\nhttps://github.com/${data.usern}\n\n${data.email}`;
 
-  return head+makeToC(data.sections)+createSections(data)+foot;
+  return title+badge+head+makeToC(data.sections)+createSections(data)+foot;
 }
 
 const makeToC = sections => {
@@ -21,7 +23,7 @@ const createSections = (responses) => {
   for (const s of responses.sections) {
     switch (s) {
       case "Installation":
-        text += `## Installation\nTo install execute the following commands:\n\`\`\`\n${responses.inst}\n\`\`\`\n\n`;
+        text += `## Installation\nTo install dependencies run the following command:\n\`\`\`\n${responses.inst}\n\`\`\`\n\n`;
         break;
       case "Usage":
         text += `## Usage\n${responses.usage}\n\n`;
@@ -33,7 +35,7 @@ const createSections = (responses) => {
         text += `## Contributing\n${responses.contr}\n\n`;
         break;
       case "Tests":
-        text += `## Tests\nTo run tests execute the following commands:\n\`\`\`\n${responses.tests}\n\`\`\`\n\n`;
+        text += `## Tests\nTo run tests execute the following command:\n\`\`\`\n${responses.tests}\n\`\`\`\n\n`;
         break;
       default:
     }
