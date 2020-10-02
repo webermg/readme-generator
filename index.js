@@ -2,57 +2,9 @@ const generateMarkdown = require("./utils/generateMarkdown");
 
 const inq = require("inquirer");
 const fs = require("fs");
-const Choices = require("inquirer/lib/objects/choices");
+const questions = require("./utils/questions")
 
-// array of questions for user
-const questions = [
-    {
-        name: "title",
-        message: "Project title: ",
-        type: "input"
-    },
-    {
-        name: "desc",
-        message: "Project description: ",
-        type: "input"
-    },
-    {
-        name: "inst",
-        message: "Installation instructions: ",
-        type: "input"
-    },
-    {
-        name: "usage",
-        message: "Usage info: ",
-        type: "input"
-    },
-    {
-        name: "contr",
-        message: "Contribution guidelines: ",
-        type: "input"
-    },
-    {
-        name: "tests",
-        message: "Test instructions: ",
-        type: "input"
-    },
-    {
-        name: "lic",
-        message: "Licence: ",
-        type: "list",
-        choices: ["some choice", "some other choice"]
-    },
-    {
-        name: "usern",
-        message: "GitHub username: ",
-        type: "input"
-    },
-    {
-        name: "email",
-        message: "Email: ",
-        type: "input"
-    }
-];
+
 
 // function to write README file
 function writeToFile(fileName, text) {
@@ -66,11 +18,12 @@ function writeToFile(fileName, text) {
 let data = {
     "title":"some Title",
     "desc":"a project",
+    "sections": ["Installation","Usage","License","Contributing","Tests"],
     "inst":"how to install",
     "usage":"how to use",
-    "contr":"How to contribute",
-    "tests":"test information",
-    "lic":"a license of osme kinmd",
+    "contr":"How to contribute\nanother line",
+    "tests":"npm run test",
+    "lic":"MIT",
     "usern":"somedude",
     "email":"somedude@dude.com"
 }
@@ -86,6 +39,8 @@ function init() {
     //     writeToFile("output/README.md",text);
     // })
 }
+
+
 
 // function call to initialize program
 init();
