@@ -1,46 +1,43 @@
 // function to generate markdown for README
 function generateMarkdown(data) {
-    return `# ${data.title}
-  
-  ## Description
-  
-  ${data.desc}
+  const head = `# ${data.title}\n## Description\n\n${data.desc}\n\n`;
+  const foot = `## Questions\nhttps://github.com/${data.usern}\n\n${data.email}`;
 
-  ## Table of Contents
-  1. [Installation](#Installation)
-  2. [Usage](#Usage)
-  3. [License](#License)
-  4. [Contributing](#Contributing)
-  5. [Tests](#Tests)
-  6. [Questions](#Questions)
-  
-  ## Installation
-  
-  ${data.inst}
+  return head+makeToC(data.sections)+createSections(data)+foot;
+}
 
-  ## Usage
-  
-  ${data.usage}
-
-  ## License
-  
-  ${data.lic}
-
-  ## Contributing
-
-  ${data.contr}
-  
-  ## Tests
-  
-  ${data.tests}
-
-  ## Questions
-  
-  https://github.com/${data.usern}
-  ${data.email}
-
-  `;
+const makeToC = sections => {
+  let toc = `## Table of Contents\n`;
+  let i = 1;
+  for (const s of sections) {
+    toc += `${i++}. [${s}](#${s})\n`
   }
-  
-  module.exports = generateMarkdown;
-  
+  toc += `${i}. [Questions](#Questions)\n\n`;
+  return toc;
+}
+
+const createSections = (responses) => {
+  let text = "";
+  for (const s of responses.sections) {
+    switch (s) {
+      case "Installation":
+        text += `## Installation\nTo install execute the following commands:\n\`\`\`\n${responses.inst}\n\`\`\`\n\n`;
+        break;
+      case "Usage":
+        text += `## Usage\n${responses.usage}\n\n`;
+        break;
+      case "License":
+        text += `## License\nThis project is licensed under the ${responses.lic} license\n\n`;
+        break;
+      case "Contributing":
+        text += `## Contributing\n${responses.contr}\n\n`;
+        break;
+      case "Tests":
+        text += `## Tests\nTo run tests execute the following commands:\n\`\`\`\n${responses.tests}\n\`\`\`\n\n`;
+        break;
+      default:
+    }
+  }
+  return text;
+}
+module.exports = generateMarkdown;
